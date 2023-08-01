@@ -57,7 +57,7 @@ function createFileIndex($directory, &$fileIndex) {
                 }
                 $fileIndex[] = $filePath;
             } elseif (is_dir($filePath)) {
-                // Check if the directory is the "images/assets" directory and skip it if true
+                // Check if the directory is the "images/assets" directory and skip it if true - suggest moving image files like logos / footer images etc here and ignore them
                 if (strpos($filePath, '/images/assets/') !== false) {
                     continue;
                 }
@@ -81,7 +81,7 @@ function isImageUsedInArticle($imageName) {
     return !empty($articleIds);
 }
 
-// Function to check if an image is used in the Event Booking (EB) component and event_end_date is 2 years before today date
+// Function to check if an image is used in the Event Booking (EB) component and event_end_date is 2 years before today date - if you dont use EB just remove this function.
 function isImageUsedInEB($imageName) {
     $db = JFactory::getDbo();
     $query = $db->getQuery(true)
@@ -195,12 +195,12 @@ function moveUnusedFiles($fileIndex, $destinationFolder) {
 function main() {
     $fileIndex = [];
 
-    // Adjust the paths to match the actual directories
+    // Adjust the paths to match the actual directories - you can comment out yootheme if you dont use YTP templates
     createFileIndex(JPATH_BASE . '/templates/yootheme/cache', $fileIndex);
     createFileIndex(JPATH_BASE . '/images', $fileIndex);
 
-    // Specify the destination folder outside the website directory
-    $destinationFolder = '/home/otwddevacc/athloneec.ontargetdev.eu/images/unused';
+    // Specify the destination folder outside the website directory - change this to what you require
+    $destinationFolder = '/home/xxxx/xxxx/images/unused';
 
     if (!is_dir($destinationFolder)) {
         mkdir($destinationFolder, 0755, true);
@@ -217,7 +217,7 @@ function main() {
 
     // Notify the administrator about the cleanup process and the report.
     $fileSubject = "Unused Files Cleanup Report";
-    $adminEmail = "hproberts@gmail.com"; // Replace with the actual admin email address
+    $adminEmail = "myemail@myemail.com"; // Replace with the actual admin email address
     mail($adminEmail, $fileSubject, $fileReport);
 }
 
